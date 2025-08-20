@@ -25,6 +25,53 @@
 - **Markdown渲染**: React Markdown
 - **状态管理**: React Context API
 
+## 📁 项目结构
+
+```
+ai-news-assistant/
+├── public/                     # 静态资源
+│   ├── index.html             # HTML模板
+│   ├── favicon.ico            # 网站图标
+│   └── manifest.json          # PWA清单文件
+├── src/                       # 源代码
+│   ├── components/            # React组件
+│   │   ├── ChatInterface.js   # AI新闻对话界面
+│   │   ├── PodcastInterface.js # AI每日播客界面
+│   │   └── MarkdownDemo.js    # Markdown渲染演示
+│   ├── contexts/              # Context状态管理
+│   │   └── PodcastContext.js  # 播客状态管理
+│   ├── services/              # API服务
+│   │   └── api.js             # Coze API集成
+│   ├── App.js                 # 主应用组件
+│   ├── index.js               # 应用入口
+│   └── index.css              # 全局样式
+├── build/                     # 生产构建文件 (部署后生成)
+├── node_modules/              # 依赖包 (git忽略)
+├── .gitignore                 # Git忽略文件
+├── package.json               # 项目配置和依赖
+├── package-lock.json          # 依赖锁定文件
+├── tailwind.config.js         # Tailwind CSS配置
+├── postcss.config.js          # PostCSS配置
+├── README.md                  # 项目说明文档
+├── LICENSE                    # MIT许可证
+├── GITHUB_DEPLOYMENT_GUIDE.md # GitHub部署指南
+├── PROJECT_SUMMARY.md         # 项目总结文档
+├── PODCAST_FEATURES.md        # 播客功能说明
+├── deploy.bat                 # Windows部署脚本
+├── start.bat                  # Windows启动脚本
+└── config-checker.js          # API配置检查工具
+```
+
+### 核心文件说明
+
+- **`src/App.js`**: 主应用组件，包含路由和布局
+- **`src/components/ChatInterface.js`**: AI新闻对话功能实现
+- **`src/components/PodcastInterface.js`**: AI每日播客功能实现
+- **`src/contexts/PodcastContext.js`**: 播客状态管理和持久化
+- **`src/services/api.js`**: Coze API集成和SSE解析
+- **`public/index.html`**: 应用HTML模板
+- **`tailwind.config.js`**: Tailwind CSS和Typography插件配置
+
 ## 📦 安装和运行
 
 ### 环境要求
@@ -95,6 +142,25 @@ const NEWS_PODCAST_CONFIG = {
 ## 📄 许可证
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+
+## 🚀 部署信息
+
+### 在线访问
+- **🌐 公网地址**: [https://suy123xb.github.io/ai-news-assistant/](https://suy123xb.github.io/ai-news-assistant/)
+- **📦 部署平台**: GitHub Pages
+- **🔧 部署方式**: gh-pages分支自动部署
+
+### 部署命令
+```bash
+# 构建并部署到GitHub Pages
+npm run deploy
+
+# 本地开发
+npm start
+
+# 生产构建
+npm run build
+```
 
 ## 🤝 贡献
 
