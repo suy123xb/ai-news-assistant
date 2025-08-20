@@ -61,7 +61,7 @@ export const PodcastProvider = ({ children }) => {
   useEffect(() => {
     // 检查是否是页面重新加载
     const isPageReload = performance.navigation.type === 1 || 
-                        document.readyState === 'complete' && !sessionStorage.getItem('podcastInitialized');
+                        (document.readyState === 'complete' && !sessionStorage.getItem('podcastInitialized'));
     
     if (isPageReload) {
       // 页面重新加载，重置状态
