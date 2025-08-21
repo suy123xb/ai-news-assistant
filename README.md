@@ -2,6 +2,9 @@
 
 一个基于React的智能新闻助手Web应用，提供AI新闻对话和每日播客功能。
 体验链接：<https://suy123xb.github.io/ai-news-assistant/>
+前端页面：
+<img width="1670" height="950" alt="image" src="https://github.com/user-attachments/assets/29e9ef3f-5983-4d54-a5fc-256e0a186977" />
+
 
 ## 🌟 功能特性
 ### 🤖 AI新闻对话助手
