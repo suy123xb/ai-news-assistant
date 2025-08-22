@@ -1,9 +1,23 @@
 # AI新闻助手 Web应用
 
-一个基于React的智能新闻助手Web应用，提供AI新闻对话和每日播客功能。
-体验链接：<https://suy123xb.github.io/ai-news-assistant/>
-前端页面：
+## ✨基本概况
+- 一个基于React的智能新闻助手Web应用，提供AI新闻对话和每日播客功能。
+- 体验链接：<https://suy123xb.github.io/ai-news-assistant/>
+- 背景：AI产品经理每天需要从多个平台搜寻AI相关的资讯，十分耗费精力和时间
+- 目标：此新闻助手可以帮助用户从各大权威新闻网站，获取、整理并生成新闻列表和新闻播客，让用户快速把握重要资讯
+- 前端页面：
 <img width="1670" height="950" alt="image" src="https://github.com/user-attachments/assets/29e9ef3f-5983-4d54-a5fc-256e0a186977" />
+
+## 🎶视频演示
+- 对话演示：
+
+https://github.com/user-attachments/assets/f5d3bff1-3a34-4086-9aad-8bf19d421a14
+
+
+- 播客演示：
+
+https://github.com/user-attachments/assets/7cb3e9cb-ebaf-48a5-b925-5efc9b0b4d9a
+
 
 
 ## 🌟 功能特性
