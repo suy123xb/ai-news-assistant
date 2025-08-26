@@ -46,13 +46,18 @@ https://github.com/user-attachments/assets/7cb3e9cb-ebaf-48a5-b925-5efc9b0b4d9a
 4. 阅读新闻内容并播放音频
 
 ## 🙌AI协作
+<details>
+<summary> 协作记录 （点击展开）</summary>
 - 创建前端：<img width="595" height="976" alt="1" src="https://github.com/user-attachments/assets/4729d4eb-0ec4-4e12-b79d-c7e3a2078112" />
 
 - 构建后端：<img width="313" height="983" alt="2" src="https://github.com/user-attachments/assets/aff5c93e-09e2-4880-87fd-273ab73d9300" />
 
 - debug：<img width="334" height="925" alt="3" src="https://github.com/user-attachments/assets/adf598c5-c13e-4f2c-b473-6153177cd440" />
 
-- 提交部署：<img width="609" height="906" alt="4" src="https://github.com/user-attachments/assets/8349abfb-166b-4659-8d67-618bc952eba3" />
+- 提交部署：<img width="609" height="906" alt="4" src="https://github.com/user-attachments/assets/8349abfb-166b-4659-8d67-618bc952eba3" />  
+  
+</details>
+
 
 
 
