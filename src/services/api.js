@@ -44,9 +44,6 @@ export const chatWithNewsAssistant = async (message, conversationName = null) =>
     });
     
     // 处理SSE格式的响应数据
-    console.log('API响应:', response.data);
-    
-    // 解析SSE格式的数据
     const sseData = response.data;
     let finalContent = '';
     
@@ -56,8 +53,8 @@ export const chatWithNewsAssistant = async (message, conversationName = null) =>
       if (line.startsWith('data: ')) {
         try {
           const data = JSON.parse(line.substring(6));
-          // 查找包含实际内容的assistant消息
-          if (data.content && data.role === 'assistant' && data.type === 'answer') {
+          // 查找包含完整内容的assistant消息（completed事件）
+          if (data.content && data.role === 'assistant' && data.type === 'answer' && data.created_at) {
             finalContent = data.content;
           }
         } catch (e) {
@@ -75,7 +72,6 @@ export const chatWithNewsAssistant = async (message, conversationName = null) =>
     };
   } catch (error) {
     console.error('AI新闻对话助手API调用失败:', error);
-    console.error('错误详情:', error.response?.data);
     throw error;
   }
 };

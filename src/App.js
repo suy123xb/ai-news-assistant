@@ -3,6 +3,7 @@ import { MessageSquare, Volume2, Menu, X } from 'lucide-react';
 import ChatInterface from './components/ChatInterface';
 import PodcastInterface from './components/PodcastInterface';
 import { PodcastProvider } from './contexts/PodcastContext';
+import { ChatProvider } from './contexts/ChatContext';
 
 function App() {
   const [activeTab, setActiveTab] = useState('chat');
@@ -27,7 +28,8 @@ function App() {
 
   return (
     <PodcastProvider>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <ChatProvider>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* 头部导航 */}
       <header className="bg-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -109,25 +111,12 @@ function App() {
 
       {/* 主要内容区域 */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="h-[calc(100vh-12rem)]">
+        <div className={activeTab === 'podcast' ? 'min-h-screen' : 'h-[calc(100vh-12rem)]'}>
           {ActiveComponent && <ActiveComponent />}
         </div>
       </main>
-
-      {/* 页脚 */}
-      <footer className="bg-white border-t border-gray-200 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center text-gray-600">
-            <p className="text-sm">
-              © 2025 AI新闻助手. 由Coze AI提供音频技术支持.
-            </p>
-            <p className="text-xs mt-2 text-gray-500">
-              智能新闻对话 | 每日播客播报 | 让AI为您解读天下事
-            </p>
-          </div>
-        </div>
-      </footer>
-      </div>
+    </div>
+      </ChatProvider>
     </PodcastProvider>
   );
 }
