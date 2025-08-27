@@ -12,14 +12,10 @@
 
 
 ## 🎶视频演示
-- 对话演示：
 
-https://github.com/user-attachments/assets/f5d3bff1-3a34-4086-9aad-8bf19d421a14
+https://github.com/user-attachments/assets/b4015c46-34ae-4287-a4ee-67bed49a3349
 
 
-- 播客演示：
-
-https://github.com/user-attachments/assets/7cb3e9cb-ebaf-48a5-b925-5efc9b0b4d9a
 
 
 
