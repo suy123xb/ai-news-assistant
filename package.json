@@ -2,7 +2,7 @@
   "name": "ai-news-assistant",
   "version": "1.0.0",
   "description": "AI新闻助手Web应用",
-  "homepage": ".",
+  "homepage": "https://suy123xb.github.io/ai-news-assistant",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
