@@ -6,7 +6,10 @@
 - 背景：AI产品经理每天需要从多个平台搜寻AI相关的资讯，十分耗费精力和时间
 - 目标：此新闻助手可以帮助用户从各大权威新闻网站，获取、整理并生成新闻列表和新闻播客，让用户快速把握重要资讯
 - 前端页面：
-<img width="1670" height="950" alt="image" src="https://github.com/user-attachments/assets/29e9ef3f-5983-4d54-a5fc-256e0a186977" />
+<img width="1805" height="924" alt="image" src="https://github.com/user-attachments/assets/bc3cf8e7-a84e-405c-8daa-21ab99a644ca" />
+<img width="1670" height="876" alt="image" src="https://github.com/user-attachments/assets/c745133f-d256-47cf-9393-4a9fe4e96793" />
+
+
 
 ## 🎶视频演示
 - 对话演示：
