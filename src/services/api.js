@@ -1,7 +1,19 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'https://api.coze.cn/v1/workflows/chat';
-const API_TOKEN = 'pat_w0edcbtoBkdypUrhU0nF3gDTVnTd9eWdcPLiGAenhTQSQWTww0cp96wrlgm7BDk4';
+
+// 优先从环境变量读取 Token（推荐），否则使用硬编码的 Token（备用）
+const API_TOKEN = process.env.REACT_APP_COZE_API_TOKEN || 
+                  'pat_fN3yKfVSRx7hoa42M3HjiqLFu1ORB6UNzQ31HTQMRFrJKVFMtBpZRpGm3F3YA8t0';
+
+// Token 验证和提示
+if (!API_TOKEN || API_TOKEN === 'your_token_here') {
+  console.error('⚠️ Coze API Token 未正确配置！');
+  console.error('请在项目根目录创建 .env.local 文件，并设置：');
+  console.error('REACT_APP_COZE_API_TOKEN=your_actual_token');
+} else {
+  console.log('✅ API Token 已配置 (前缀: ' + API_TOKEN.substring(0, 10) + '...)');
+}
 
 // AI新闻对话助手API配置
 const NEWS_CHAT_CONFIG = {
