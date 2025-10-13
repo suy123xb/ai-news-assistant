@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'https://api.coze.cn/v1/workflows/chat';
-const API_TOKEN = 'pat_rUmo3HuHlQHDBSoacoNpfLFSQbhYqPF1e8YmyZUE6SKMDSWQ0kjHHnOFRJo4Igit';
+const API_TOKEN = 'pat_w0edcbtoBkdypUrhU0nF3gDTVnTd9eWdcPLiGAenhTQSQWTww0cp96wrlgm7BDk4';
 
 // AI新闻对话助手API配置
 const NEWS_CHAT_CONFIG = {
