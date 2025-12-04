@@ -58,13 +58,28 @@ export const chatWithNewsAssistant = async (message, conversationName = null) =>
     // 处理SSE格式的响应数据
     const sseData = response.data;
     let finalContent = '';
+    let errorMessage = '';
+    let currentEvent = '';
     
     // 提取包含实际内容的assistant消息
     const lines = sseData.split('\n');
     for (const line of lines) {
+      // 检测事件类型
+      if (line.startsWith('event: ')) {
+        currentEvent = line.substring(7).trim();
+      }
+      
       if (line.startsWith('data: ')) {
         try {
           const data = JSON.parse(line.substring(6));
+          
+          // 检测错误事件
+          if (currentEvent === 'error' || data.code || data.last_error?.code) {
+            const errMsg = data.msg || data.last_error?.msg || '未知错误';
+            errorMessage = errMsg;
+            console.error('API返回错误:', errMsg);
+          }
+          
           // 查找包含完整内容的assistant消息（completed事件）
           if (data.content && data.role === 'assistant' && data.type === 'answer' && data.created_at) {
             finalContent = data.content;
@@ -75,11 +90,23 @@ export const chatWithNewsAssistant = async (message, conversationName = null) =>
       }
     }
     
+    // 如果有错误信息，优先返回错误
+    if (errorMessage && !finalContent) {
+      return {
+        content: `⚠️ API错误: ${errorMessage}`,
+        message: `⚠️ API错误: ${errorMessage}`,
+        isError: true,
+        data: {
+          content: `⚠️ API错误: ${errorMessage}`
+        }
+      };
+    }
+    
     return {
-      content: finalContent || 'AI助手已回复，请查看完整内容',
-      message: finalContent || 'AI助手已回复，请查看完整内容',
+      content: finalContent || '未能获取到有效回复，请稍后重试',
+      message: finalContent || '未能获取到有效回复，请稍后重试',
       data: {
-        content: finalContent || 'AI助手已回复，请查看完整内容'
+        content: finalContent || '未能获取到有效回复，请稍后重试'
       }
     };
   } catch (error) {
@@ -113,13 +140,28 @@ export const getDailyNewsPodcast = async (message = "你是谁", conversationNam
     // 解析SSE格式的数据
     const sseData = response.data;
     let finalContent = '';
+    let errorMessage = '';
+    let currentEvent = '';
     
     // 提取包含实际内容的assistant消息
     const lines = sseData.split('\n');
     for (const line of lines) {
+      // 检测事件类型
+      if (line.startsWith('event: ')) {
+        currentEvent = line.substring(7).trim();
+      }
+      
       if (line.startsWith('data: ')) {
         try {
           const data = JSON.parse(line.substring(6));
+          
+          // 检测错误事件
+          if (currentEvent === 'error' || data.code || data.last_error?.code) {
+            const errMsg = data.msg || data.last_error?.msg || '未知错误';
+            errorMessage = errMsg;
+            console.error('播客API返回错误:', errMsg);
+          }
+          
           // 查找包含实际内容的assistant消息
           if (data.content && data.role === 'assistant' && data.type === 'answer') {
             finalContent = data.content;
@@ -128,6 +170,20 @@ export const getDailyNewsPodcast = async (message = "你是谁", conversationNam
           // 忽略解析错误
         }
       }
+    }
+    
+    // 如果有错误信息，优先返回错误
+    if (errorMessage && !finalContent) {
+      return {
+        error: true,
+        content: `⚠️ API错误: ${errorMessage}`,
+        message: `⚠️ API错误: ${errorMessage}`,
+        audioUrl: '',
+        data: {
+          content: `⚠️ API错误: ${errorMessage}`,
+          audioUrl: ''
+        }
+      };
     }
     
     // 解析音频链接和新闻内容
@@ -157,11 +213,11 @@ export const getDailyNewsPodcast = async (message = "你是谁", conversationNam
     }
     
     return {
-      content: newsContent || 'AI播客内容已生成，请查看完整内容',
-      message: newsContent || 'AI播客内容已生成，请查看完整内容',
+      content: newsContent || '未能获取到有效回复，请稍后重试',
+      message: newsContent || '未能获取到有效回复，请稍后重试',
       audioUrl: audioUrl,
       data: {
-        content: newsContent || 'AI播客内容已生成，请查看完整内容',
+        content: newsContent || '未能获取到有效回复，请稍后重试',
         audioUrl: audioUrl
       }
     };
