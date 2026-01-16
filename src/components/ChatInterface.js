@@ -25,8 +25,13 @@ const ChatInterface = () => {
 
   // 检查是否应该显示欢迎界面
   const shouldShowWelcome = useMemo(() => {
-    // 只有在没有当前对话、且不在加载状态、且没有正在加载的消息、且没有消息时才显示欢迎界面
-    const result = !currentConversation && !isLoading && !isLoadingMessage && messages.length === 0;
+    // 显示欢迎界面的条件：
+    // 1. 消息数量为 0（无论是首次进入还是新建对话）
+    // 2. 且不在加载状态
+    // 3. 且没有正在加载的消息
+    // 只有当用户发送第一条消息后（messages.length > 0），欢迎界面才会消失
+    const hasNoMessages = messages.length === 0;
+    const result = hasNoMessages && !isLoading && !isLoadingMessage;
     
     // 隐藏的调试信息 - 用户看不到
     if (process.env.NODE_ENV === 'development') {
