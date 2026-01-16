@@ -4,7 +4,7 @@ const API_BASE_URL = 'https://api.coze.cn/v1/workflows/chat';
 
 // 优先从环境变量读取 Token（推荐），否则使用硬编码的 Token（备用）
 const API_TOKEN = process.env.REACT_APP_COZE_API_TOKEN || 
-                  'pat_ceJAr51SN7t1YdFqaxQeZc8R3NE7fCSZNXGDQgUntEPUrjdsl90T5ME736eBJUuZ';
+                  'pat_6uvYOiXvYtE6Ag51zuGEkP3qJMZKU60lgbp2hu7QiCsAnqf50C8Ee1AFgYetEtRB';
 
 // Token 验证和提示
 if (!API_TOKEN || API_TOKEN === 'your_token_here') {
