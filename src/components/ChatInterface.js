@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Send, User, Bot, Loader2, Menu } from 'lucide-react';
+import { Send, User, Bot, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { chatWithNewsAssistant } from '../services/api';
 import { useChat } from '../contexts/ChatContext';
@@ -135,7 +135,7 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full min-h-0">
       {/* 侧边栏 */}
       <ChatSidebar 
         isOpen={isSidebarOpen} 
@@ -143,42 +143,17 @@ const ChatInterface = () => {
       />
       
       {/* 主聊天区域 */}
-      <div className="flex-1 flex flex-col bg-white rounded-lg shadow-lg lg:ml-0">
-        {/* 头部 */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-t-lg">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Bot className="w-6 h-6" />
-              <div>
-                <h2 className="text-xl font-semibold">
-                  AI新闻对话助手
-                </h2>
-                <p className="text-blue-100 text-sm mt-1">
-                  与AI助手进行智能新闻对话，获取最新资讯和深度分析
-                </p>
-              </div>
-            </div>
-            
-            {/* 移动端菜单按钮 */}
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="lg:hidden p-2 text-white hover:bg-white hover:bg-opacity-20 rounded-md transition-colors"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
+      <div className="flex-1 flex flex-col bg-white rounded-lg shadow-lg lg:ml-0 min-h-0">
         {/* 消息区域 */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
           {shouldShowWelcome ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
-              <div className="max-w-md mx-auto">
-                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="max-w-md mx-auto mt-16 space-y-3">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                   <Bot className="w-10 h-10 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">欢迎使用AI新闻助手</h2>
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <h2 className="text-2xl font-bold text-gray-900">欢迎使用AI新闻助手</h2>
+                <p className="text-gray-600 leading-relaxed">
                   我是您的智能新闻助手，可以为您提供最新的新闻资讯、热点话题分析和深度解读。
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
@@ -311,24 +286,24 @@ const ChatInterface = () => {
         </div>
 
         {/* 输入区域 */}
-        <div className="p-6 border-t border-gray-200 bg-white">
-          <div className="flex gap-3 items-end">
+        <div className="p-3 border-t border-gray-200 bg-white">
+          <div className="flex gap-2 items-end">
             <div className="flex-1">
               <textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="输入您的问题，按Enter发送..."
-                className="w-full p-4 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full p-3 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 rows="1"
                 disabled={isLoadingMessage}
-                style={{ minHeight: '60px', maxHeight: '120px' }}
+                style={{ minHeight: '50px', maxHeight: '120px' }}
               />
             </div>
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isLoadingMessage}
-              className="px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
+              className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
             >
               {isLoadingMessage ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -337,7 +312,7 @@ const ChatInterface = () => {
               )}
             </button>
           </div>
-          <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center justify-between mt-2">
             <p className="text-xs text-gray-500">
               按 Enter 发送，Shift + Enter 换行
             </p>
@@ -349,12 +324,12 @@ const ChatInterface = () => {
 
         {/* 固定位置的底部区域 */}
         <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 border-t border-blue-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <div className="text-center text-gray-600">
-              <p className="text-sm">
+              <p className="text-xs">
                 © 2025 AI新闻助手. 由Coze AI提供音频技术支持. Designed by Suy.
               </p>
-              <p className="text-xs mt-1 text-gray-500">
+              <p className="text-xs mt-0.5 text-gray-500">
                 智能新闻对话 | 每日播客播报 | 让AI为您解读天下事
               </p>
             </div>

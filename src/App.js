@@ -32,7 +32,7 @@ function App() {
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* 头部导航 */}
       <header className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
@@ -110,8 +110,8 @@ function App() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className={activeTab === 'podcast' ? 'min-h-screen' : 'h-[calc(100vh-12rem)]'}>
+      <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 h-[calc(100vh-4rem)] overflow-hidden">
+        <div className={activeTab === 'podcast' ? 'h-full overflow-y-auto' : 'h-full'}>
           {ActiveComponent && <ActiveComponent />}
         </div>
       </main>
