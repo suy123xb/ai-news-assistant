@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { MessageSquare, Volume2, Menu, X } from 'lucide-react';
+import { MessageSquare, Volume2, Newspaper, Menu, X } from 'lucide-react';
 import ChatInterface from './components/ChatInterface';
 import PodcastInterface from './components/PodcastInterface';
+import NewsDigestInterface from './components/NewsDigestInterface';
 import { PodcastProvider } from './contexts/PodcastContext';
 import { ChatProvider } from './contexts/ChatContext';
+import { DigestProvider } from './contexts/DigestContext';
+import { theme } from './theme/colors';
 
 function App() {
   const [activeTab, setActiveTab] = useState('chat');
@@ -21,6 +24,12 @@ function App() {
       name: 'AI每日播客',
       icon: Volume2,
       component: PodcastInterface
+    },
+    {
+      id: 'digest',
+      name: '每日新闻推送',
+      icon: Newspaper,
+      component: NewsDigestInterface
     }
   ];
 
@@ -29,7 +38,8 @@ function App() {
   return (
     <PodcastProvider>
       <ChatProvider>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+        <DigestProvider>
+        <div className={`min-h-screen ${theme.pageBg}`}>
       {/* 头部导航 */}
       <header className="bg-white shadow-lg">
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,7 +47,7 @@ function App() {
             {/* Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className={`text-2xl font-bold ${theme.appLogo}`}>
                   AI新闻助手
                 </h1>
               </div>
@@ -52,9 +62,7 @@ function App() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      activeTab === tab.id ? theme.navActive : theme.navInactive
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -93,9 +101,7 @@ function App() {
                         setIsMobileMenuOpen(false);
                       }}
                       className={`flex items-center gap-2 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                        activeTab === tab.id
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                        activeTab === tab.id ? theme.navActive : theme.navInactive
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -111,11 +117,12 @@ function App() {
 
       {/* 主要内容区域 */}
       <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 h-[calc(100vh-4rem)] overflow-hidden">
-        <div className={activeTab === 'podcast' ? 'h-full overflow-y-auto' : 'h-full'}>
+        <div className={activeTab === 'podcast' || activeTab === 'digest' ? 'h-full overflow-y-auto' : 'h-full'}>
           {ActiveComponent && <ActiveComponent />}
         </div>
       </main>
     </div>
+        </DigestProvider>
       </ChatProvider>
     </PodcastProvider>
   );

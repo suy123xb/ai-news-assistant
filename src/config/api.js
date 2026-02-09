@@ -13,6 +13,11 @@ export const API_CONFIG = {
       id: "7538014055757283374",
       appId: "7537995711728828426", 
       name: "AI每日新闻播客"
+    },
+    NEWS_DIGEST: {
+      id: "7604822147281977385",
+      appId: "7604774068013105171",
+      name: "每日新闻推送"
     }
   }
 };
@@ -36,7 +41,7 @@ export const checkApiConfig = () => {
   if (!API_CONFIG.WORKFLOWS.NEWS_PODCAST.id) {
     issues.push('新闻播客工作流ID未配置');
   }
-  
+
   return {
     isValid: issues.length === 0,
     issues

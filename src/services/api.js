@@ -27,6 +27,12 @@ const NEWS_PODCAST_CONFIG = {
   app_id: "7537995711728828426"
 };
 
+// 每日新闻推送API配置（Coze 工作流）
+const NEWS_DIGEST_CONFIG = {
+  workflow_id: process.env.REACT_APP_COZE_NEWS_DIGEST_WORKFLOW_ID || "7604822147281977385",
+  app_id: process.env.REACT_APP_COZE_NEWS_DIGEST_APP_ID || "7604774068013105171"
+};
+
 // 创建axios实例
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -224,6 +230,76 @@ export const getDailyNewsPodcast = async (message = "你是谁", conversationNam
   } catch (error) {
     console.error('AI每日新闻播客API调用失败:', error);
     console.error('错误详情:', error.response?.data);
+    throw error;
+  }
+};
+
+// 每日新闻推送API（生成每日新闻摘要/推送内容）
+export const getDailyNewsDigest = async (message = "生成今日新闻推送") => {
+  if (!NEWS_DIGEST_CONFIG.workflow_id) {
+    return {
+      content: "⚠️ 每日新闻推送功能尚未配置。请在 Coze 平台创建「每日新闻推送」工作流，并在环境变量中设置 REACT_APP_COZE_NEWS_DIGEST_WORKFLOW_ID，或于 src/services/api.js 中配置 NEWS_DIGEST_CONFIG.workflow_id。",
+      message: "请先配置每日新闻推送工作流",
+      isError: true,
+      data: { content: "" }
+    };
+  }
+  try {
+    const response = await apiClient.post('', {
+      workflow_id: NEWS_DIGEST_CONFIG.workflow_id,
+      app_id: NEWS_DIGEST_CONFIG.app_id,
+      parameters: {},
+      additional_messages: [
+        {
+          content: message,
+          content_type: "text",
+          role: "user",
+          type: "question"
+        }
+      ]
+    });
+
+    const sseData = response.data;
+    let finalContent = '';
+    let errorMessage = '';
+    let currentEvent = '';
+
+    const lines = sseData.split('\n');
+    for (const line of lines) {
+      if (line.startsWith('event: ')) {
+        currentEvent = line.substring(7).trim();
+      }
+      if (line.startsWith('data: ')) {
+        try {
+          const data = JSON.parse(line.substring(6));
+          if (currentEvent === 'error' || data.code || data.last_error?.code) {
+            errorMessage = data.msg || data.last_error?.msg || '未知错误';
+          }
+          if (data.content && data.role === 'assistant' && data.type === 'answer') {
+            finalContent = data.content;
+          }
+        } catch (e) {
+          // 忽略解析错误
+        }
+      }
+    }
+
+    if (errorMessage && !finalContent) {
+      return {
+        content: `⚠️ API错误: ${errorMessage}`,
+        message: `⚠️ API错误: ${errorMessage}`,
+        isError: true,
+        data: { content: "" }
+      };
+    }
+
+    return {
+      content: finalContent || '未能获取到有效推送内容，请稍后重试',
+      message: finalContent || '未能获取到有效推送内容，请稍后重试',
+      data: { content: finalContent || '' }
+    };
+  } catch (error) {
+    console.error('每日新闻推送API调用失败:', error);
     throw error;
   }
 };

@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { chatWithNewsAssistant } from '../services/api';
 import { useChat } from '../contexts/ChatContext';
 import ChatSidebar from './ChatSidebar';
+import { theme } from '../theme/colors';
 
 const ChatInterface = () => {
   const {
@@ -154,7 +155,7 @@ const ChatInterface = () => {
           {shouldShowWelcome ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="max-w-md mx-auto mt-16 space-y-3">
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <div className={`w-20 h-20 mx-auto ${theme.chatAvatar} rounded-full flex items-center justify-center`}>
                   <Bot className="w-10 h-10 text-white" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">欢迎使用AI新闻助手</h2>
@@ -189,7 +190,7 @@ const ChatInterface = () => {
                   <div
                     className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
                       message.role === 'user'
-                        ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                        ? theme.chatUserBubble
                         : message.isError
                         ? 'bg-red-50 border border-red-200 text-red-800'
                         : 'bg-white border border-gray-200 text-gray-800'
@@ -198,9 +199,9 @@ const ChatInterface = () => {
                     <div className="flex items-start gap-3">
                       {message.role === 'bot' && (
                         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                          message.isError ? 'bg-red-100' : 'bg-blue-100'
+                          message.isError ? 'bg-red-100' : theme.chatBotAvatar
                         }`}>
-                          <Bot className={`w-5 h-5 ${message.isError ? 'text-red-600' : 'text-blue-600'}`} />
+                          <Bot className={`w-5 h-5 ${message.isError ? 'text-red-600' : theme.chatBotIcon}`} />
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
@@ -222,7 +223,7 @@ const ChatInterface = () => {
                                     href={href} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                                    className={theme.link}
                                   >
                                     {children}
                                   </a>
@@ -238,7 +239,7 @@ const ChatInterface = () => {
                                   </pre>
                                 ),
                                 blockquote: ({ children }) => (
-                                  <blockquote className="border-l-4 border-blue-300 pl-4 italic text-gray-700 bg-blue-50 py-2 rounded-r">
+                                  <blockquote className={theme.markdown.blockquote}>
                                     {children}
                                   </blockquote>
                                 )
@@ -250,13 +251,13 @@ const ChatInterface = () => {
                         ) : (
                           <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                         )}
-                        <p className={`text-xs mt-2 opacity-70 ${message.role === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
+                        <p className={`text-xs mt-2 opacity-70 ${message.role === 'user' ? theme.chatUserTimestamp : 'text-gray-500'}`}>
                           {message.timestamp}
                         </p>
                       </div>
                       {message.role === 'user' && (
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                          <User className="w-5 h-5 text-blue-600" />
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-full ${theme.chatBotAvatar} flex items-center justify-center`}>
+                          <User className={`w-5 h-5 ${theme.chatBotIcon}`} />
                         </div>
                       )}
                     </div>
@@ -269,15 +270,15 @@ const ChatInterface = () => {
                 <div className="flex justify-start mb-4">
                   <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
                     <div className="flex items-center gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-full ${theme.chatBotAvatar} flex items-center justify-center`}>
+                        <Loader2 className={`w-5 h-5 ${theme.chatBotIcon} animate-spin`} />
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-gray-600">AI正在思考中...</p>
                         <div className="flex space-x-1 mt-1">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                          <div className={`w-2 h-2 ${theme.chatLoadingDots} rounded-full animate-bounce`}></div>
+                          <div className={`w-2 h-2 ${theme.chatLoadingDots} rounded-full animate-bounce`} style={{animationDelay: '0.1s'}}></div>
+                          <div className={`w-2 h-2 ${theme.chatLoadingDots} rounded-full animate-bounce`} style={{animationDelay: '0.2s'}}></div>
                         </div>
                       </div>
                     </div>
@@ -299,7 +300,7 @@ const ChatInterface = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="输入您的问题，按Enter发送..."
-                className="w-full p-3 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className={`w-full p-3 border border-gray-300 rounded-2xl resize-none ${theme.chatSendButtonFocus} transition-all duration-200`}
                 rows="1"
                 disabled={isLoadingMessage}
                 style={{ minHeight: '50px', maxHeight: '120px' }}
@@ -308,7 +309,7 @@ const ChatInterface = () => {
             <button
               onClick={handleSendMessage}
               disabled={!inputMessage.trim() || isLoadingMessage}
-              className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl hover:from-blue-600 hover:to-blue-700 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center"
+              className={`px-4 py-3 ${theme.chatSendButton} flex items-center justify-center`}
             >
               {isLoadingMessage ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -328,7 +329,7 @@ const ChatInterface = () => {
         </div>
 
         {/* 固定位置的底部区域 */}
-        <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 border-t border-blue-200">
+        <div className={theme.footerBg}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <div className="text-center text-gray-600">
               <p className="text-xs">

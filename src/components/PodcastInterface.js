@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, Pause, Volume2, Loader2, RefreshCw, Calendar, Clock } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { usePodcast } from '../contexts/PodcastContext';
+import { theme, getMarkdownComponents } from '../theme/colors';
 
 const PodcastInterface = () => {
   const {
@@ -80,14 +81,14 @@ const PodcastInterface = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className={`flex flex-col min-h-screen ${theme.pageBg}`}>
       {/* 头部 */}
-      <div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-4 rounded-t-lg">
+      <div className={theme.headerBg}>
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <Volume2 className="w-6 h-6" />
           AI每日新闻播客
         </h2>
-        <p className="text-purple-100 text-sm mt-1">
+        <p className={`${theme.headerSubtext} text-sm mt-1`}>
           每日精选新闻，AI智能播报，让您轻松了解天下事
         </p>
       </div>
@@ -97,8 +98,8 @@ const PodcastInterface = () => {
         {/* 确认对话框 */}
         {showConfirmDialog && !hasInitialized && (
           <div className="flex flex-col items-center justify-center h-full text-center">
-            <div className="bg-white rounded-xl shadow-xl p-8 max-w-md w-full text-center border border-purple-100">
-              <Volume2 className="w-16 h-16 text-purple-500 mx-auto mb-4" />
+            <div className={`bg-white rounded-xl shadow-xl p-8 max-w-md w-full text-center ${theme.cardBorder}`}>
+              <Volume2 className={`w-16 h-16 ${theme.iconPrimary} mx-auto mb-4`} />
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 启动AI每日新闻播客
               </h3>
@@ -106,16 +107,10 @@ const PodcastInterface = () => {
                 是否要运行AI每日新闻播客？这将生成最新的新闻内容和音频播报。
               </p>
               <div className="flex gap-4 justify-center">
-                <button
-                  onClick={handleConfirmGenerate}
-                  className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
-                >
+                <button onClick={handleConfirmGenerate} className={theme.buttonPrimary}>
                   是，开始生成
                 </button>
-                <button
-                  onClick={handleCancelGenerate}
-                  className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
-                >
+                <button onClick={handleCancelGenerate} className={theme.buttonSecondary}>
                   取消
                 </button>
               </div>
@@ -125,21 +120,17 @@ const PodcastInterface = () => {
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-full">
-            <Loader2 className="w-12 h-12 text-purple-500 animate-spin mb-4" />
+            <Loader2 className={`w-12 h-12 ${theme.loader} animate-spin mb-4`} />
             <p className="text-gray-600">正在生成今日新闻播客...</p>
           </div>
         ) : podcastData && hasInitialized ? (
           <div className="space-y-6">
             {/* 播客信息 */}
-            <div className="bg-white rounded-xl shadow-lg border border-purple-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 border-b border-purple-100">
+            <div className={`bg-white rounded-xl shadow-lg ${theme.cardBorder} overflow-hidden`}>
+              <div className={theme.cardHeaderBg}>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-lg font-semibold text-gray-800">今日新闻播报</h3>
-                  <button
-                    onClick={handleRefresh}
-                    className="p-2 text-purple-600 hover:bg-purple-100 rounded-full transition-colors"
-                    title="刷新播客"
-                  >
+                  <button onClick={handleRefresh} className={theme.iconButton} title="刷新播客">
                     <RefreshCw className="w-5 h-5" />
                   </button>
                 </div>
@@ -164,45 +155,7 @@ const PodcastInterface = () => {
                     <span className="text-red-600">{podcastData.message}</span>
                   ) : (
                     <div className="prose prose-sm max-w-none">
-                      <ReactMarkdown
-                        components={{
-                          // 自定义渲染组件以匹配播客界面风格
-                          p: ({ children }) => <p className="mb-4 last:mb-0 leading-relaxed">{children}</p>,
-                          h1: ({ children }) => <h1 className="text-xl font-bold mb-4 text-purple-800">{children}</h1>,
-                          h2: ({ children }) => <h2 className="text-lg font-semibold mb-3 text-purple-700">{children}</h2>,
-                          h3: ({ children }) => <h3 className="text-md font-medium mb-3 text-purple-600">{children}</h3>,
-                          ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
-                          ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
-                          li: ({ children }) => <li className="text-sm leading-relaxed">{children}</li>,
-                          strong: ({ children }) => <strong className="font-semibold text-purple-800">{children}</strong>,
-                          em: ({ children }) => <em className="italic text-purple-700">{children}</em>,
-                          a: ({ href, children }) => (
-                            <a 
-                              href={href} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-purple-600 hover:text-purple-800 underline transition-colors"
-                            >
-                              {children}
-                            </a>
-                          ),
-                          code: ({ children }) => (
-                            <code className="bg-purple-100 px-2 py-1 rounded text-sm font-mono text-purple-800">
-                              {children}
-                            </code>
-                          ),
-                          pre: ({ children }) => (
-                            <pre className="bg-purple-50 p-3 rounded text-sm overflow-x-auto border border-purple-200">
-                              {children}
-                            </pre>
-                          ),
-                          blockquote: ({ children }) => (
-                            <blockquote className="border-l-4 border-purple-300 pl-4 italic bg-purple-50 py-3 rounded-r">
-                              {children}
-                            </blockquote>
-                          )
-                        }}
-                      >
+                      <ReactMarkdown components={getMarkdownComponents()}>
                         {podcastData.data?.content || podcastData.message || podcastData.content || '今日新闻播客内容加载中...'}
                       </ReactMarkdown>
                     </div>
@@ -213,12 +166,9 @@ const PodcastInterface = () => {
 
             {/* 音频播放器 - 只在有音频链接时显示 */}
             {podcastData.audioUrl && (
-              <div className="bg-white rounded-xl shadow-lg border border-purple-100 p-4">
+              <div className="bg-white rounded-xl shadow-lg border border-blue-200 p-4">
                 <div className="flex items-center gap-4 mb-4">
-                  <button
-                    onClick={handlePlayPause}
-                    className="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors shadow-lg"
-                  >
+                  <button onClick={handlePlayPause} className={theme.buttonPrimaryRounded}>
                     {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
                   </button>
                   
@@ -244,7 +194,7 @@ const PodcastInterface = () => {
                           onClick={handleSeek}
                         >
                           <div
-                            className="h-full bg-purple-500 rounded-full transition-all"
+                            className={`h-full ${theme.progressBar} rounded-full transition-all`}
                             style={{ width: `${(currentTime / duration) * 100}%` }}
                           />
                         </div>
@@ -266,9 +216,9 @@ const PodcastInterface = () => {
             )}
 
             {/* 功能提示 */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg border border-blue-100 p-4">
-              <h4 className="font-semibold text-blue-800 mb-3">使用提示</h4>
-              <ul className="text-sm text-blue-700 space-y-2">
+            <div className={theme.tipBox}>
+              <h4 className={theme.tipBoxTitle}>使用提示</h4>
+              <ul className={theme.tipBoxText}>
                 <li>• 播客内容由AI智能生成，包含最新热点新闻</li>
                 <li>• 支持音频播放、音量调节和进度控制</li>
                 <li>• 点击刷新按钮可重新生成最新播客</li>
@@ -281,10 +231,7 @@ const PodcastInterface = () => {
           <div className="text-center text-gray-500 py-8">
             <Volume2 className="w-12 h-12 mx-auto mb-4 text-gray-300" />
             <p className="text-lg">暂无播客内容</p>
-            <button
-              onClick={fetchPodcast}
-              className="mt-4 px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors shadow-lg"
-            >
+            <button onClick={fetchPodcast} className={`mt-4 ${theme.buttonPrimaryLg}`}>
               重新生成播客
             </button>
           </div>
@@ -292,7 +239,7 @@ const PodcastInterface = () => {
       </div>
 
       {/* 跟随内容延展的底部区域 */}
-      <div className="bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 border-t border-purple-200">
+      <div className={theme.footerBg}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center text-gray-600">
             <p className="text-sm">
