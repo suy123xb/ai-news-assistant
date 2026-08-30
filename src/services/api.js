@@ -1,19 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.coze.cn/v1/workflows/chat';
-
-// 优先从环境变量读取 Token（推荐），否则使用硬编码的 Token（备用）
-const API_TOKEN = process.env.REACT_APP_COZE_API_TOKEN || 
-                  'pat_i6TWRg9OjCVbrxXzwX0hCJF3rV0Ry4VFcDXW4axMhCqmOzH2UccxcFAzc70ZFLGV';
-
-// Token 验证和提示
-if (!API_TOKEN || API_TOKEN === 'your_token_here') {
-  console.error('⚠️ Coze API Token 未正确配置！');
-  console.error('请在项目根目录创建 .env.local 文件，并设置：');
-  console.error('REACT_APP_COZE_API_TOKEN=your_actual_token');
-} else {
-  console.log('✅ API Token 已配置 (前缀: ' + API_TOKEN.substring(0, 10) + '...)');
-}
+// 浏览器只调用 Cloudflare Pages 代理；Coze Token 由加密 Secret 保存。
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL ||
+  'https://ai-news-assistant-api.pages.dev/v1/workflows/chat';
 
 // AI新闻对话助手API配置
 const NEWS_CHAT_CONFIG = {
@@ -37,7 +26,6 @@ const NEWS_DIGEST_CONFIG = {
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Authorization': `Bearer ${API_TOKEN}`,
     'Content-Type': 'application/json'
   }
 });
