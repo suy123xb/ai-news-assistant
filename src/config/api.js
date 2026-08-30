@@ -1,7 +1,7 @@
 // API配置文件
 export const API_CONFIG = {
-  BASE_URL: 'https://api.coze.cn/v1/workflows/chat',
-  TOKEN: process.env.REACT_APP_COZE_API_TOKEN || 'your_api_token_here',
+  BASE_URL: process.env.REACT_APP_API_BASE_URL ||
+    'https://ai-news-assistant-api.pages.dev/v1/workflows/chat',
   
   WORKFLOWS: {
     NEWS_CHAT: {
@@ -30,8 +30,8 @@ export const isProduction = process.env.NODE_ENV === 'production';
 export const checkApiConfig = () => {
   const issues = [];
   
-  if (!API_CONFIG.TOKEN || API_CONFIG.TOKEN === 'your_api_token_here') {
-    issues.push('API Token未配置或无效');
+  if (!API_CONFIG.BASE_URL) {
+    issues.push('API代理地址未配置');
   }
   
   if (!API_CONFIG.WORKFLOWS.NEWS_CHAT.id) {
